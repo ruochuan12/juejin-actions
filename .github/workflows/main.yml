@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: lxchuan12/juejin-actions
+        uses: lxchuan12/juejin-actions@main
         with:
           who-to-greet: '若川'
       # Use the output from the `hello` step
