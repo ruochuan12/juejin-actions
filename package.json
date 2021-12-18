@@ -1,0 +1,24 @@
+{
+  "name": "juejin-actions",
+  "version": "1.0.0",
+  "description": "juejin-actions",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lxchuan12/juejin-actions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lxchuan12/juejin-actions/issues"
+  },
+  "homepage": "https://github.com/lxchuan12/juejin-actions#readme",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0"
+  }
+}
