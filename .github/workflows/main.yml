@@ -1,9 +1,13 @@
-on: [push]
+on: 
+ push:
+ schedule:
+ # 定时任务 每天 00:05 自动签到
+    - cron: '5 0 * * *'
 
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: 掘金自动签到
     steps:
       - name: Hello world action step
         id: hello
