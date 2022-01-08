@@ -8509,12 +8509,11 @@ var headers = {
   "Referer": "https://juejin.cn/",
   "Referrer-Policy": "strict-origin-when-cross-origin"
 };
-var request = async function({ url, method = "get" }) {
-  console.log(url);
-  const [err, res] = await await_to_js_default((0, import_axios.default)({ url, method, headers }));
-  const result = [err, res];
-  if (res && res.data && res.data.err_no !== 0) {
-  }
+var request = async function(options) {
+  console.log("\u8C03\u7528\u7684\u63A5\u53E3\uFF1A", options);
+  const lastOptions = Object.assign({}, options, { headers });
+  const [err, res] = await await_to_js_default((0, import_axios.default)(lastOptions));
+  const result = [err, res && res.data];
   return result;
 };
 
@@ -8534,13 +8533,13 @@ var checkIn = async function() {
 // src/index.js
 async function main() {
   const [err, res] = await getStatus();
-  console.log(err, res, "main");
   if (err) {
-    throw new Error(err.reponse);
+    return [err, res];
   }
   if (res.err_no === 0 && !res.data) {
-    const result = await checkIn();
-    console.log(result);
+    return await checkIn();
+  } else {
+    return [err, { err_msg: "\u60A8\u4ECA\u65E5\u5DF2\u5B8C\u6210\u7B7E\u5230\uFF0C\u8BF7\u52FF\u91CD\u590D\u7B7E\u5230\uFF01" }];
   }
 }
 
@@ -8554,7 +8553,14 @@ try {
   core.setOutput("time", time);
   const payload = JSON.stringify(github.context.payload, void 0, 2);
   console.log(`The event payload: ${payload}`);
-  main();
+  main().then((resArr) => {
+    const [err, res] = resArr;
+    if (err) {
+      core.setOutput(err);
+      return;
+    }
+    core.setOutput(res.err_msg);
+  });
 } catch (error) {
   core.setFailed(error.message);
 }
