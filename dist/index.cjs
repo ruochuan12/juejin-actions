@@ -8556,10 +8556,10 @@ try {
   main().then((resArr) => {
     const [err, res] = resArr;
     if (err) {
-      core.setOutput(err);
+      core.setOutput("checkInResult", err);
       return;
     }
-    core.setOutput("\u7B7E\u5230\u7ED3\u679C\uFF1A", res.err_msg);
+    core.setOutput("checkInResult", res.err_msg);
   });
 } catch (error) {
   core.setFailed(error.message);
