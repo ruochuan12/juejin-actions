@@ -3,7 +3,6 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    node-version: 12.x
     name: A job to say hello
     steps:
       - name: Hello world action step
