@@ -1,1 +1,1 @@
-export const COOKIE = process.env.COOKIE;
+export const COOKIE = process.env.JUEJIN_COOKIE;

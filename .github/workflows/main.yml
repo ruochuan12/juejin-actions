@@ -3,11 +3,14 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
+    node-version: 12.x
     name: A job to say hello
     steps:
       - name: Hello world action step
         id: hello
         uses: lxchuan12/juejin-actions@main
+        env: 
+          JUEJIN_COOKIE: ${{secrets.JUEJIN_COOKIE}}
         with:
           who-to-greet: '若川'
       # Use the output from the `hello` step

@@ -1,8 +1,8 @@
 import { checkIn, getStatus } from './services/index.js';
 
-async function main(){
+export async function main(){
     const [err, res] = await getStatus();
-    console.log(err, res.data, 'main');
+    console.log(err, res, 'main');
     if(err){
         throw new Error(err.reponse);
     }
@@ -13,4 +13,4 @@ async function main(){
         console.log(result);
     }
 }
-main();
+// main();
