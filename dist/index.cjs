@@ -8559,7 +8559,7 @@ try {
       core.setOutput(err);
       return;
     }
-    core.setOutput(res.err_msg);
+    core.setOutput("\u7B7E\u5230\u7ED3\u679C\uFF1A", res.err_msg);
   });
 } catch (error) {
   core.setFailed(error.message);
