@@ -18,5 +18,4 @@ jobs:
           who-to-greet: '若川'
       # Use the output from the `hello` step
       - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
-        run: echo "签到结果： ${{ steps.hello.outputs.checkInResult }}"
+        run: echo "The time was ${{ steps.hello.outputs.time }}" && echo "签到结果： ${{ steps.hello.outputs.checkInResult }}"
