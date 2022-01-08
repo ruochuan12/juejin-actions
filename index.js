@@ -17,7 +17,7 @@ try {
           core.setOutput(err);
           return;
       }
-      core.setOutput(res.err_msg);
+      core.setOutput("签到结果：", res.err_msg);
   });
 } catch (error) {
   core.setFailed(error.message);
