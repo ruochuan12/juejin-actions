@@ -16,13 +16,10 @@ const headers = {
     "Referrer-Policy": "strict-origin-when-cross-origin",
 };
 
-export const request = async function({ url, method = 'get' }){
-    console.log(url);
-    const [err, res]= await to(axios({ url, method, headers }));
-    // console.log(err, res, 'await-to-js');
-    const result = [err, res];
-    if(res && res.data && res.data.err_no !== 0){
-        // console.log(data.err_msg);
-    }
+export const request = async function(options){
+    console.log('调用的接口：', options);
+    const lastOptions = Object.assign({}, options, { headers });
+    const [err, res] = await to(axios(lastOptions));
+    const result = [err, res && res.data];
     return result;
 }

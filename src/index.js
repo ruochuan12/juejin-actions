@@ -2,15 +2,23 @@ import { checkIn, getStatus } from './services/index.js';
 
 export async function main(){
     const [err, res] = await getStatus();
-    console.log(err, res, 'main');
     if(err){
-        throw new Error(err.reponse);
+        return [err, res];
     }
     // 未签到
     if(res.err_no === 0 && !res.data){
         // 签到
-        const result = await checkIn();
-        console.log(result);
+        return await checkIn();
+    }
+    else{
+        return [err, { err_msg: '您今日已完成签到，请勿重复签到！' }];
     }
 }
-// main();
+// main().then(resArr => {
+//     const [err, res] = resArr;
+//     if(err){
+//         console.error(err);
+//         return;
+//     }
+//     console.log(res.err_msg);
+// });
