@@ -5,7 +5,7 @@ on:
     - cron: '30 16 * * *'
 
 jobs:
-  hello_world_job:
+  juejin:
     runs-on: ubuntu-latest
     name: 掘金自动签到
     steps:
@@ -19,3 +19,4 @@ jobs:
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
+        run: echo "签到结果： ${{ steps.hello.outputs.checkInResult }}"
