@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "juejin-actions",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
