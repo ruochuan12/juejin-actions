@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "juejin-actions",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "esbuild --bundle index.js --format=cjs --platform=node --outfile=dist/index.cjs"
