@@ -8492,7 +8492,7 @@ var to = function(promise) {
 var await_to_js_default = to;
 
 // src/config/index.js
-var COOKIE = process.env.COOKIE;
+var COOKIE = process.env.JUEJIN_COOKIE;
 
 // src/services/request.js
 var headers = {
@@ -8543,7 +8543,6 @@ async function main() {
     console.log(result);
   }
 }
-main();
 
 // index.js
 var core = __toESM(require_core(), 1);
