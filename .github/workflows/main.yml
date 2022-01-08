@@ -1,8 +1,8 @@
 on: 
  push:
  schedule:
- # 定时任务 每天 00:05 自动签到
-    - cron: '5 0 * * *'
+ # 定时任务 每天 00:05 自动签到 北京时间+8
+    - cron: '30 16 * * *'
 
 jobs:
   hello_world_job:
