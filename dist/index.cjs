@@ -72,7 +72,7 @@ var require_utils = __commonJS({
     function isNumber(val) {
       return typeof val === "number";
     }
-    function isObject(val) {
+    function isObject2(val) {
       return val !== null && typeof val === "object";
     }
     function isPlainObject(val) {
@@ -95,7 +95,7 @@ var require_utils = __commonJS({
       return toString.call(val) === "[object Function]";
     }
     function isStream(val) {
-      return isObject(val) && isFunction(val.pipe);
+      return isObject2(val) && isFunction(val.pipe);
     }
     function isURLSearchParams(val) {
       return typeof URLSearchParams !== "undefined" && val instanceof URLSearchParams;
@@ -170,7 +170,7 @@ var require_utils = __commonJS({
       isArrayBufferView,
       isString,
       isNumber,
-      isObject,
+      isObject: isObject2,
       isPlainObject,
       isUndefined,
       isDate,
@@ -3492,18 +3492,18 @@ var require_is_plain_object = __commonJS({
   "node_modules/.pnpm/is-plain-object@5.0.0/node_modules/is-plain-object/dist/is-plain-object.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function isObject(o) {
+    function isObject2(o) {
       return Object.prototype.toString.call(o) === "[object Object]";
     }
     function isPlainObject(o) {
       var ctor, prot;
-      if (isObject(o) === false)
+      if (isObject2(o) === false)
         return false;
       ctor = o.constructor;
       if (ctor === void 0)
         return true;
       prot = ctor.prototype;
-      if (isObject(prot) === false)
+      if (isObject2(prot) === false)
         return false;
       if (prot.hasOwnProperty("isPrototypeOf") === false) {
         return false;
@@ -8509,11 +8509,23 @@ var headers = {
 };
 
 // src/services/request.js
+var isObject = (val) => typeof val === "object" && val !== null;
 var request = async function(options) {
   console.log("\u8C03\u7528\u7684\u63A5\u53E3\uFF1A", options);
   const lastOptions = Object.assign({}, options, { headers });
   const [err, res] = await await_to_js_default((0, import_axios.default)(lastOptions));
-  const result = [err, res && res.data];
+  let result = [err, res];
+  if (err || !isObject(res)) {
+    return result;
+  }
+  const { data: { err_no: dataErrNo } } = res;
+  if (dataErrNo === 0) {
+    result = [err, res && res.data];
+  }
+  if (dataErrNo === 403) {
+    result = [{ ...res.data, err_msg: `${res.data.err_msg} 
+ \u76EE\u524D\u672A\u767B\u5F55\uFF0C\u8BF7\u68C0\u67E5 JUEJIN_COOKIE \u662F\u5426\u6B63\u786E` }, res.data];
+  }
   return result;
 };
 
