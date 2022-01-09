@@ -2,7 +2,7 @@ on:
  push:
  schedule:
  # 定时任务 每天 00:05 自动签到 北京时间+8
-    - cron: '30 16 * * *'
+    - cron: '5 16 * * *'
 
 jobs:
   juejin:

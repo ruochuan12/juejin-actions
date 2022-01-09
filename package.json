@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/index.cjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test/test.js",
     "build": "esbuild --bundle index.js --format=cjs --platform=node --outfile=dist/index.cjs"
   },
   "repository": {
