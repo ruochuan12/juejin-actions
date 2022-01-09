@@ -357,21 +357,21 @@ var require_cookies = __commonJS({
     module2.exports = utils.isStandardBrowserEnv() ? function standardBrowserEnv() {
       return {
         write: function write(name, value, expires, path, domain, secure) {
-          var cookie = [];
-          cookie.push(name + "=" + encodeURIComponent(value));
+          var cookie2 = [];
+          cookie2.push(name + "=" + encodeURIComponent(value));
           if (utils.isNumber(expires)) {
-            cookie.push("expires=" + new Date(expires).toGMTString());
+            cookie2.push("expires=" + new Date(expires).toGMTString());
           }
           if (utils.isString(path)) {
-            cookie.push("path=" + path);
+            cookie2.push("path=" + path);
           }
           if (utils.isString(domain)) {
-            cookie.push("domain=" + domain);
+            cookie2.push("domain=" + domain);
           }
           if (secure === true) {
-            cookie.push("secure");
+            cookie2.push("secure");
           }
-          document.cookie = cookie.join("; ");
+          document.cookie = cookie2.join("; ");
         },
         read: function read(name) {
           var match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
@@ -8492,11 +8492,9 @@ var to = function(promise) {
 var await_to_js_default = to;
 
 // src/config/index.js
-var COOKIE = process.env.JUEJIN_COOKIE;
-
-// src/services/request.js
+var cookie = process.env.JUEJIN_COOKIE;
 var headers = {
-  cookie: COOKIE,
+  cookie,
   "accept": "*/*",
   "accept-language": "zh-CN,zh;q=0.9",
   "content-type": "application/json",
@@ -8509,6 +8507,8 @@ var headers = {
   "Referer": "https://juejin.cn/",
   "Referrer-Policy": "strict-origin-when-cross-origin"
 };
+
+// src/services/request.js
 var request = async function(options) {
   console.log("\u8C03\u7528\u7684\u63A5\u53E3\uFF1A", options);
   const lastOptions = Object.assign({}, options, { headers });
@@ -8518,28 +8518,58 @@ var request = async function(options) {
 };
 
 // src/services/index.js
+var prefix = "https://api.juejin.cn/growth_api/v1/";
 var getStatus = async function() {
   return await request({
-    url: "https://api.juejin.cn/growth_api/v1/get_today_status"
+    url: `${prefix}get_today_status`
   });
 };
 var checkIn = async function() {
   return await request({
-    url: "https://api.juejin.cn/growth_api/v1/check_in",
+    url: `${prefix}check_in`,
     method: "post"
+  });
+};
+var getCounts = async function() {
+  return await request({
+    url: `${prefix}get_counts`
+  });
+};
+var getCurPoint = async function() {
+  return await request({
+    url: `${prefix}get_cur_point`
   });
 };
 
 // src/index.js
+async function getInfo() {
+  const [err1, res1] = await getCounts();
+  const [err2, res2] = await getCurPoint();
+  let message = "";
+  if (!err1) {
+    message += `\u8FDE\u7EED\u7B7E\u5230\u5929\u6570\uFF1A${res1.data.cont_count}
+`;
+    message += `\u7D2F\u8BA1\u7B7E\u5230\u5929\u6570\uFF1A${res1.data.sum_count}
+`;
+  }
+  if (!err2) {
+    message += `\u5F53\u524D\u77FF\u77F3\u6570\uFF1A${res2.data}`;
+  }
+  return message;
+}
 async function main() {
   const [err, res] = await getStatus();
   if (err) {
     return [err, res];
   }
   if (res.err_no === 0 && !res.data) {
-    return await checkIn();
+    const [err2, res2] = await checkIn();
+    const message = await getInfo();
+    return [err2, { err_msg: `${res2.err_msg}
+${message}` }];
   } else {
-    return [err, { err_msg: "\u60A8\u4ECA\u65E5\u5DF2\u5B8C\u6210\u7B7E\u5230\uFF0C\u8BF7\u52FF\u91CD\u590D\u7B7E\u5230\uFF01" }];
+    const message = await getInfo();
+    return [err, { err_msg: "\u60A8\u4ECA\u65E5\u5DF2\u5B8C\u6210\u7B7E\u5230\uFF0C\u8BF7\u52FF\u91CD\u590D\u7B7E\u5230\uFF01\n" + message }];
   }
 }
 
