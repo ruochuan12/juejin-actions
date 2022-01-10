@@ -4,12 +4,30 @@
 你好，我是[**若川**](https://lxchuan12.gitee.io)。目前持续组织了5个月[每周一起学200行左右源码共读活动](https://www.yuque.com/ruochuan12/topics/1)，每周一期，已进行到20期，感兴趣的可以加我微信 [ruochuan12](https://mp.weixin.qq.com/s?__biz=MzA5MjQwMzQyNw==&mid=2650756550&idx=1&sn=9acc5e30325963e455f53ec2f64c1fdd&chksm=8866564abf11df5c41307dba3eb84e8e14de900e1b3500aaebe802aff05b0ba2c24e4690516b&token=917686367&lang=zh_CN#rd) 加群参与，长期交流学习。
 
 ## 使用
-### fork
+### fork 我的项目
 
-项目 settings => secrets 添加 JUEJIN_COOKIE 掘金 cookie
+在项目 `settings => secrets` 添加 `JUEJIN_COOKIE` 字段，设置值为`掘金 cookie`，设置好可以手动触发一次，验证是否正确，下次就会定时触发了，再也不用担心签到了。
+>`掘金 cookie` 好像一个月内有效，退出登录后也无效，需要及时更换 `cookie`。
+
+![设置 secrets](./docs/setting.png)
+
+![首次手动触发 workflow](./docs/run-workflow.png)
+
+如图所示，就成功了。
+
+![workflow 签到结果](./docs/main-ci)
+
+**获取 `掘金 cookie` 方法**
+
+[打开这个页面，登录后，按F12打开开发者工具，刷新页面](https://juejin.cn/user/center/signin?from=avatar_menu)
+
+在 `fetch/xhr` 搜索过滤 `get_today_status` 这个接口，在 `Request Headers` 中复制 `cookie` 的值。如下图所示：
+
+![获取 cookie](./docs/images/cookie.png)
+
 ### 新建项目或者已有项目
 
-添加 workflows main.yml
+添加 `.github/workflows/main.yml` 文件，其中 `main` 可以自定义成其他名称。
 
 ```yml
 on: 
@@ -37,11 +55,12 @@ jobs:
           echo "签到结果： ${{ steps.hello.outputs.checkInResult }}"
 ```
 
-同样在项目 settings => secrets 添加 JUEJIN_COOKIE 掘金 cookie
+同样在项目 `settings => secrets` 添加 `JUEJIN_COOKIE` 字段，设置值为`掘金 cookie`。
 
 ## 本地开发
 
 ```bash
+# git clone https://github.com/lxchuan12/juejin-actions.git
 npm i -g pnpm
 pnpm install
 ```
@@ -55,5 +74,5 @@ export const cookie = '你在掘金的cookie';
 ## 本地测试
 
 ```bash
-node test/test.js
+npm run test
 ```
