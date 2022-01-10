@@ -9,13 +9,13 @@
 在项目 `settings => secrets` 添加 `JUEJIN_COOKIE` 字段，设置值为`掘金 cookie`，设置好可以手动触发一次，验证是否正确，下次就会定时触发了，再也不用担心签到了。
 >`掘金 cookie` 好像一个月内有效，退出登录后也无效，需要及时更换 `cookie`。
 
-![设置 secrets](./docs/setting.png)
+![设置 secrets](./docs/images/settings.png)
 
-![首次手动触发 workflow](./docs/run-workflow.png)
+![首次手动触发 workflow](./docs/images/run-workflow.png)
 
 如图所示，就成功了。
 
-![workflow 签到结果](./docs/main-ci)
+![workflow 签到结果](./docs/images/main-ci.png)
 
 **获取 `掘金 cookie` 方法**
 
