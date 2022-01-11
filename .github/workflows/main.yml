@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: lxchuan12/juejin-actions@main
+        uses: Sneaken/juejin-actions@send_email
         env: 
           JUEJIN_COOKIE: ${{secrets.JUEJIN_COOKIE}}
           MAIL_SENDER: ${{secrets.MAIL_SENDER}}
