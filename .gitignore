@@ -1,3 +1,3 @@
 node_modules
 _storage.json
-test/cookie.js
+test/env.js
