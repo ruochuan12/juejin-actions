@@ -1,7 +1,9 @@
 import { createTransport } from 'nodemailer';
 import { email } from '../config/index.js';
 
+const whetherToOpenMailService = email.host && email.port && email.user && email.pass && email.to;
 export const sendEmail = async (content) => {
+    if (!whetherToOpenMailService) return;
     const transporter = await createTransport({
         host: email.host,
         port: Number(email.port),
