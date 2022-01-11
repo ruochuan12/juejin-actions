@@ -3,9 +3,9 @@ import { email } from '../config/index.js';
 
 export const sendEmail = async (content) => {
     const transporter = await createTransport({
-        host,
-        port: Number(port),
-        secure: Number(port) === 465, // true for 465, false for other ports
+        host: email.host,
+        port: Number(email.port),
+        secure: Number(email.port) === 465, // true for 465, false for other ports
         auth: {
             user: email.user, // generated ethereal user
             pass: email.pass, // generated ethereal password
