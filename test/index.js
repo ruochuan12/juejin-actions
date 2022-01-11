@@ -1,11 +1,13 @@
 import { main } from '../src/index.js';
-main().then(resArr => {
+import { sendEmail } from '../src/services/email.js';
+
+main().then(async (resArr) => {
     const [err, res] = resArr;
-    if(err){
+    if (err) {
         console.error(err);
+        await sendEmail(err);
         return;
     }
     console.log(res.err_msg);
+    await sendEmail(res.err_msg);
 });
-
-
