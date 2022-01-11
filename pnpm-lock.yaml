@@ -5,11 +5,13 @@ specifiers:
   '@actions/github': ^5.0.0
   axios: ^0.24.0
   esbuild: ^0.14.10
+  nodemailer: ^6.7.2
 
 dependencies:
   '@actions/core': 1.6.0
   '@actions/github': 5.0.0
   axios: 0.24.0
+  nodemailer: 6.7.2
 
 devDependencies:
   esbuild: 0.14.10
@@ -324,6 +326,11 @@ packages:
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /nodemailer/6.7.2:
+    resolution: {integrity: sha512-Dz7zVwlef4k5R71fdmxwR8Q39fiboGbu3xgswkzGwczUfjp873rVxt1O46+Fh0j1ORnAC6L9+heI8uUpO6DT7Q==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /once/1.4.0:
