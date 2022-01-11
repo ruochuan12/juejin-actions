@@ -22,7 +22,8 @@
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "nodemailer": "^6.7.2"
   },
   "devDependencies": {
     "esbuild": "^0.14.10"

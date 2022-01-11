@@ -15,6 +15,11 @@ jobs:
         uses: lxchuan12/juejin-actions@main
         env: 
           JUEJIN_COOKIE: ${{secrets.JUEJIN_COOKIE}}
+          MAIL_SENDER: ${{secrets.MAIL_SENDER}}
+          SMTP_PASSWORD: ${{secrets.SMTP_PASSWORD}}
+          MAIL_HOST_SENDER: ${{secrets.MAIL_HOST_SENDER}}
+          MAIL_PORT_SENDER: ${{secrets.MAIL_PORT_SENDER}}
+          MAIL_RECIPIENT: ${{secrets.MAIL_RECIPIENT}}
         with:
           who-to-greet: '若川'
       # Use the output from the `hello` step
