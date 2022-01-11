@@ -2217,8 +2217,8 @@ var require_tunnel = __commonJS({
       self.maxSockets = self.options.maxSockets || http.Agent.defaultMaxSockets;
       self.requests = [];
       self.sockets = [];
-      self.on("free", function onFree(socket, host2, port2, localAddress) {
-        var options2 = toOptions(host2, port2, localAddress);
+      self.on("free", function onFree(socket, host, port, localAddress) {
+        var options2 = toOptions(host, port, localAddress);
         for (var i = 0, len = self.requests.length; i < len; ++i) {
           var pending = self.requests[i];
           if (pending.host === options2.host && pending.port === options2.port) {
@@ -2232,9 +2232,9 @@ var require_tunnel = __commonJS({
       });
     }
     util.inherits(TunnelingAgent, events.EventEmitter);
-    TunnelingAgent.prototype.addRequest = function addRequest(req, host2, port2, localAddress) {
+    TunnelingAgent.prototype.addRequest = function addRequest(req, host, port, localAddress) {
       var self = this;
-      var options = mergeOptions({ request: req }, self.options, toOptions(host2, port2, localAddress));
+      var options = mergeOptions({ request: req }, self.options, toOptions(host, port, localAddress));
       if (self.sockets.length >= this.maxSockets) {
         self.requests.push(options);
         return;
@@ -2350,15 +2350,15 @@ var require_tunnel = __commonJS({
         cb(secureSocket);
       });
     }
-    function toOptions(host2, port2, localAddress) {
-      if (typeof host2 === "string") {
+    function toOptions(host, port, localAddress) {
+      if (typeof host === "string") {
         return {
-          host: host2,
-          port: port2,
+          host,
+          port,
           localAddress
         };
       }
-      return host2;
+      return host;
     }
     function mergeOptions(target) {
       for (var i = 1, len = arguments.length; i < len; ++i) {
@@ -4534,14 +4534,14 @@ var require_url_state_machine = __commonJS({
         len: maxLen
       };
     }
-    function serializeHost(host2) {
-      if (typeof host2 === "number") {
-        return serializeIPv4(host2);
+    function serializeHost(host) {
+      if (typeof host === "number") {
+        return serializeIPv4(host);
       }
-      if (host2 instanceof Array) {
-        return "[" + serializeIPv6(host2) + "]";
+      if (host instanceof Array) {
+        return "[" + serializeIPv6(host) + "]";
       }
-      return host2;
+      return host;
     }
     function trimControlChars(url) {
       return url.replace(/^[\u0000-\u001F\u0020]+|[\u0000-\u001F\u0020]+$/g, "");
@@ -4844,11 +4844,11 @@ var require_url_state_machine = __commonJS({
           this.parseError = true;
           return failure;
         }
-        const host2 = parseHost(this.buffer, isSpecial(this.url));
-        if (host2 === failure) {
+        const host = parseHost(this.buffer, isSpecial(this.url));
+        if (host === failure) {
           return failure;
         }
-        this.url.host = host2;
+        this.url.host = host;
         this.buffer = "";
         this.state = "port";
         if (this.stateOverride === "hostname") {
@@ -4863,11 +4863,11 @@ var require_url_state_machine = __commonJS({
           this.parseError = true;
           return false;
         }
-        const host2 = parseHost(this.buffer, isSpecial(this.url));
-        if (host2 === failure) {
+        const host = parseHost(this.buffer, isSpecial(this.url));
+        if (host === failure) {
           return failure;
         }
-        this.url.host = host2;
+        this.url.host = host;
         this.buffer = "";
         this.state = "path start";
         if (this.stateOverride) {
@@ -4888,12 +4888,12 @@ var require_url_state_machine = __commonJS({
         this.buffer += cStr;
       } else if (isNaN(c) || c === 47 || c === 63 || c === 35 || isSpecial(this.url) && c === 92 || this.stateOverride) {
         if (this.buffer !== "") {
-          const port2 = parseInt(this.buffer);
-          if (port2 > Math.pow(2, 16) - 1) {
+          const port = parseInt(this.buffer);
+          if (port > Math.pow(2, 16) - 1) {
             this.parseError = true;
             return failure;
           }
-          this.url.port = port2 === defaultPort(this.url.scheme) ? null : port2;
+          this.url.port = port === defaultPort(this.url.scheme) ? null : port;
           this.buffer = "";
         }
         if (this.stateOverride) {
@@ -4980,14 +4980,14 @@ var require_url_state_machine = __commonJS({
           }
           this.state = "path start";
         } else {
-          let host2 = parseHost(this.buffer, isSpecial(this.url));
-          if (host2 === failure) {
+          let host = parseHost(this.buffer, isSpecial(this.url));
+          if (host === failure) {
             return failure;
           }
-          if (host2 === "localhost") {
-            host2 = "";
+          if (host === "localhost") {
+            host = "";
           }
-          this.url.host = host2;
+          this.url.host = host;
           if (this.stateOverride) {
             return false;
           }
@@ -18036,9 +18036,9 @@ var github = __toESM(require_github(), 1);
 var import_nodemailer = __toESM(require_nodemailer(), 1);
 var sendEmail = async (content) => {
   const transporter = await (0, import_nodemailer.createTransport)({
-    host,
-    port: Number(port),
-    secure: Number(port) === 465,
+    host: email.host,
+    port: Number(email.port),
+    secure: Number(email.port) === 465,
     auth: {
       user: email.user,
       pass: email.pass
