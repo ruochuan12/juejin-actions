@@ -25,6 +25,33 @@
 
 ![获取 cookie](./docs/images/cookie.png)
 
+#### 开启邮箱发送日志的服务
+
+在项目 `settings => secrets` 中需要额外添加以下字段
+
+|              字段名 | 含义                |
+|-----------------:|:------------------|
+|      MAIL_SENDER | 发送方邮箱             |
+|    SMTP_PASSWORD | 发送方SMTP服务的授权码或者口令 |
+| MAIL_HOST_SENDER | 发送邮件服务器           |
+| MAIL_PORT_SENDER | 发送邮件服务器的端口号       |
+|   MAIL_RECIPIENT | 邮件接受方             |
+
+
+以QQ邮箱为列
+
+![获取授权码](./docs/images/qq_email.png)
+
+
+|              字段名 | 举例               |
+|-----------------:|:-----------------|
+|      MAIL_SENDER | xxx@qq.com（自己邮箱） |
+|    SMTP_PASSWORD | 上图获取的授权码         |
+| MAIL_HOST_SENDER | smtp.qq.com      |
+| MAIL_PORT_SENDER | 465              |
+|   MAIL_RECIPIENT | xxx@qq.com（自己邮箱） |
+
+
 ### 新建项目或者已有项目
 
 添加 `.github/workflows/main.yml` 文件，其中 `main` 可以自定义成其他名称。
