@@ -89,6 +89,10 @@ jobs:
 # git clone https://github.com/lxchuan12/juejin-actions.git
 npm i -g pnpm
 pnpm install
+
+# 提交 commit 消息用以下命令，使用了（git-cz）
+pnpm run commit
+# npm run commit
 ```
 ## 本地测试
 
