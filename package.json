@@ -5,6 +5,7 @@
   "type": "module",
   "main": "dist/index.cjs",
   "scripts": {
+    "commit": "git-cz",
     "test": "node test/test.js",
     "build": "esbuild --bundle index.js --format=cjs --platform=node --outfile=dist/index.cjs"
   },
@@ -26,6 +27,7 @@
     "nodemailer": "^6.7.2"
   },
   "devDependencies": {
-    "esbuild": "^0.14.10"
+    "esbuild": "^0.14.10",
+    "git-cz": "^4.8.0"
   }
 }

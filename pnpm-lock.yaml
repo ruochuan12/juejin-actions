@@ -5,6 +5,7 @@ specifiers:
   '@actions/github': ^5.0.0
   axios: ^0.24.0
   esbuild: ^0.14.10
+  git-cz: ^4.8.0
   nodemailer: ^6.7.2
 
 dependencies:
@@ -15,6 +16,7 @@ dependencies:
 
 devDependencies:
   esbuild: 0.14.10
+  git-cz: 4.8.0
 
 packages:
 
@@ -315,6 +317,11 @@ packages:
       debug:
         optional: true
     dev: false
+
+  /git-cz/4.8.0:
+    resolution: {integrity: sha512-2muVkIcT6cT/9eXuxztlKQSRiOy/oHhFldCySOi1xuRJ9T5yHlg3SRQhVLoY9BVu9kxSE3YcHYp0KgQW0vUf4A==}
+    hasBin: true
+    dev: true
 
   /is-plain-object/5.0.0:
     resolution: {integrity: sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==}
