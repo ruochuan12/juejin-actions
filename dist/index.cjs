@@ -16541,10 +16541,10 @@ var require_services = __commonJS({
 var require_well_known = __commonJS({
   "node_modules/.pnpm/nodemailer@6.7.2/node_modules/nodemailer/lib/well-known/index.js"(exports, module2) {
     "use strict";
-    var services = require_services();
+    var services2 = require_services();
     var normalized = {};
-    Object.keys(services).forEach((key) => {
-      let service = services[key];
+    Object.keys(services2).forEach((key) => {
+      let service = services2[key];
       normalized[normalizeKey(key)] = normalizeService(service);
       [].concat(service.aliases || []).forEach((alias) => {
         normalized[normalizeKey(alias)] = normalizeService(service);
@@ -17961,13 +17961,17 @@ var request = async function(options) {
   if (err || !isObject(res)) {
     return result;
   }
-  const { data: { err_no: dataErrNo } } = res;
+  const {
+    data: { err_no: dataErrNo }
+  } = res;
   if (dataErrNo === 0) {
     result = [err, res && res.data];
   }
   if (dataErrNo === 403) {
-    result = [{ ...res.data, err_msg: `${res.data.err_msg} 
- \u76EE\u524D\u672A\u767B\u5F55\uFF0C\u8BF7\u68C0\u67E5 JUEJIN_COOKIE \u662F\u5426\u6B63\u786E` }, res.data];
+    result = [
+      { ...res.data, err_msg: [res.data.err_msg, "\u76EE\u524D\u672A\u767B\u5F55\uFF0C\u8BF7\u68C0\u67E5 JUEJIN_COOKIE \u662F\u5426\u6B63\u786E"] },
+      res.data
+    ];
   }
   return result;
 };
@@ -17998,17 +18002,16 @@ var getCurPoint = async function() {
 
 // src/index.js
 async function getInfo() {
-  const [err1, res1] = await getCounts();
-  const [err2, res2] = await getCurPoint();
-  let message = "";
+  const [err1, res1] = await getCurPoint();
+  const [err2, res2] = await getCounts();
+  const message = [];
   if (!err1) {
-    message += `\u8FDE\u7EED\u7B7E\u5230\u5929\u6570\uFF1A${res1.data.cont_count}
-`;
-    message += `\u7D2F\u8BA1\u7B7E\u5230\u5929\u6570\uFF1A${res1.data.sum_count}
-`;
+    message.push(`\u5F53\u524D\u77FF\u77F3\u6570: ${res1.data}`);
   }
   if (!err2) {
-    message += `\u5F53\u524D\u77FF\u77F3\u6570\uFF1A${res2.data}`;
+    message.push(`\u8FDE\u7EED\u7B7E\u5230\u5929\u6570: ${res2.data.cont_count}`);
+    message.push(`\u7D2F\u8BA1\u7B7E\u5230\u5929\u6570: ${res2.data.sum_count}
+`);
   }
   return message;
 }
@@ -18018,13 +18021,13 @@ async function main() {
     return [err, res];
   }
   if (res.err_no === 0 && !res.data) {
-    const [err2, res2] = await checkIn();
+    const [err2] = await checkIn();
     const message = await getInfo();
-    return [err2, { err_msg: `${res2.err_msg}
-${message}` }];
+    return [err2, { err_msg: message }];
   } else {
     const message = await getInfo();
-    return [err, { err_msg: "\u60A8\u4ECA\u65E5\u5DF2\u5B8C\u6210\u7B7E\u5230\uFF0C\u8BF7\u52FF\u91CD\u590D\u7B7E\u5230\uFF01\n" + message }];
+    message.unshift("\u60A8\u4ECA\u65E5\u5DF2\u5B8C\u6210\u7B7E\u5230\uFF0C\u8BF7\u52FF\u91CD\u590D\u7B7E\u5230\uFF01");
+    return [err, { err_msg: message }];
   }
 }
 
@@ -18032,28 +18035,70 @@ ${message}` }];
 var core = __toESM(require_core(), 1);
 var github = __toESM(require_github(), 1);
 
-// src/services/email.js
+// src/services/log/email.js
 var import_nodemailer = __toESM(require_nodemailer(), 1);
-var whetherToOpenMailService = email.host && email.port && email.user && email.pass && email.to;
-var sendEmail = async (content) => {
-  if (!whetherToOpenMailService)
-    return;
-  const transporter = await (0, import_nodemailer.createTransport)({
-    host: email.host,
-    port: Number(email.port),
-    secure: Number(email.port) === 465,
-    auth: {
-      user: email.user,
-      pass: email.pass
-    }
-  });
-  await transporter.sendMail({
-    from: `\u6398\u91D1 ${email.user}`,
-    to: email.to,
-    subject: "\u6398\u91D1\u81EA\u52A8\u7B7E\u5230",
-    html: content
-  });
+
+// src/services/log/log-service.js
+var LogService = class {
+  isValidate = false;
+  constructor() {
+  }
+  async log(...data) {
+  }
+  async error(...data) {
+  }
+  async sendMessage(...data) {
+  }
 };
+
+// src/services/log/email.js
+var EmailService = class extends LogService {
+  constructor() {
+    super();
+    this.isValidate = email.host && email.port && email.user && email.pass && email.to;
+  }
+  async log(...data) {
+    console.log("email log:", ...data);
+  }
+  async error(...data) {
+    console.error("email error:", ...data);
+  }
+  async sendMessage(content) {
+    if (!this.isValidate)
+      return;
+    const transporter = await (0, import_nodemailer.createTransport)({
+      host: email.host,
+      port: Number(email.port),
+      secure: Number(email.port) === 465,
+      auth: {
+        user: email.user,
+        pass: email.pass
+      }
+    });
+    await transporter.sendMail({
+      from: `\u6398\u91D1<${email.user}>`,
+      to: email.to,
+      subject: "\u6398\u91D1\u81EA\u52A8\u7B7E\u5230",
+      html: this.assembledText(content)
+    });
+  }
+  assembledText(content) {
+    if (Array.isArray(content)) {
+      const html = [];
+      content.forEach((text) => {
+        html.push(`<p>${text}</p>`);
+      });
+      return `<div>${html.join("")}</div>`;
+    } else if (typeof content === "string") {
+      return content;
+    }
+  }
+};
+var email_default = new EmailService();
+
+// src/services/log/index.js
+var services = [email_default];
+var log_default = services;
 
 // index.js
 try {
@@ -18067,11 +18112,19 @@ try {
     const [err, res] = resArr;
     if (err) {
       core.setOutput("checkInResult", err);
-      await sendEmail(err);
+      for (let logService of log_default) {
+        const [logServiceError] = await await_to_js_default(logService.sendMessage(err.err_msg));
+        if (logServiceError)
+          await logService.error(logServiceError);
+      }
       return;
     }
-    core.setOutput("checkInResult", res.err_msg);
-    await sendEmail(res.err_msg);
+    core.setOutput("checkInResult", res.err_msg.join("\n"));
+    for (let logService of log_default) {
+      const [logServiceError] = await await_to_js_default(logService.sendMessage(res.err_msg));
+      if (logServiceError)
+        await logService.error(logServiceError);
+    }
   });
 } catch (error) {
   core.setFailed(error.message);
