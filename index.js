@@ -1,7 +1,8 @@
 import { main } from './src/index.js';
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { sendEmail } from './src/services/email.js';
+import LogServices from './src/services/log/index.js';
+import to from './src/services/await-to-js.js';
 
 try {
     // `who-to-greet` input defined in action metadata file
@@ -16,11 +17,17 @@ try {
         const [err, res] = resArr;
         if (err) {
             core.setOutput('checkInResult', err);
-            await sendEmail(err);
+            for (let logService of LogServices) {
+                const [logServiceError] = await to(logService.sendMessage(err.err_msg));
+                if (logServiceError) await logService.error(logServiceError);
+            }
             return;
         }
-        core.setOutput('checkInResult', res.err_msg);
-        await sendEmail(res.err_msg);
+        core.setOutput('checkInResult', res.err_msg.join('\n'));
+        for (let logService of LogServices) {
+            const [logServiceError] = await to(logService.sendMessage(res.err_msg));
+            if (logServiceError) await logService.error(logServiceError);
+        }
     });
 } catch (error) {
     core.setFailed(error.message);
