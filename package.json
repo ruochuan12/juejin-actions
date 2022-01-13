@@ -6,6 +6,7 @@
   "main": "dist/index.cjs",
   "scripts": {
     "commit": "git-cz",
+    "release": "release-it",
     "test": "node test/test.js",
     "build": "esbuild --bundle index.js --format=cjs --platform=node --outfile=dist/index.cjs"
   },
@@ -26,8 +27,24 @@
     "axios": "^0.24.0",
     "nodemailer": "^6.7.2"
   },
+  "release-it": {
+    "git": {
+      "commitMessage": "release: release v${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
   "devDependencies": {
+    "@release-it/conventional-changelog": "^4.1.0",
     "esbuild": "^0.14.10",
-    "git-cz": "^4.8.0"
+    "git-cz": "^4.8.0",
+    "release-it": "^14.12.1"
   }
 }
