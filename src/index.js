@@ -1,33 +1,33 @@
 import { checkIn, getStatus, getCounts, getCurPoint } from './services/index.js';
 
-async function getInfo(){
-    const [err1, res1] = await getCounts();
-    const [err2, res2] = await getCurPoint();
-    let message = '';
-    if(!err1){
-        message += `连续签到天数：${res1.data.cont_count}\n`;
-        message += `累计签到天数：${res1.data.sum_count}\n`;
+async function getInfo() {
+    const [err1, res1] = await getCurPoint();
+    const [err2, res2] = await getCounts();
+    const message = [];
+    if (!err1) {
+        message.push(`当前矿石数: ${res1.data}`);
     }
-    if(!err2){
-        message += `当前矿石数：${res2.data}`;
+    if (!err2) {
+        message.push(`连续签到天数: ${res2.data.cont_count}`);
+        message.push(`累计签到天数: ${res2.data.sum_count}\n`);
     }
     return message;
 }
 
-export async function main(){
+export async function main() {
     const [err, res] = await getStatus();
-    if(err){
+    if (err) {
         return [err, res];
     }
     // 未签到
-    if(res.err_no === 0 && !res.data){
+    if (res.err_no === 0 && !res.data) {
         // 签到
-        const [err, res] = await checkIn();
+        const [err] = await checkIn();
         const message = await getInfo();
-        return [err, { err_msg: `${res.err_msg}\n${message}` }];
-    }
-    else{
+        return [err, { err_msg: message }];
+    } else {
         const message = await getInfo();
-        return [err, { err_msg: '您今日已完成签到，请勿重复签到！\n' + message }];
+        message.unshift('您今日已完成签到，请勿重复签到！');
+        return [err, { err_msg: message }];
     }
 }
