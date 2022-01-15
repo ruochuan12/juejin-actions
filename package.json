@@ -5,6 +5,7 @@
   "type": "module",
   "main": "dist/index.cjs",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "commit": "git-cz",
     "release": "release-it",
     "test": "node test/test.js",
