@@ -101,3 +101,11 @@ pnpm run commit
 ```bash
 npm run test
 ```
+
+## TODOs
+
+- [x] 根据 `cookie` 自动签到
+- [x] 邮件通知
+- [ ] 加入每天免费抽奖功能
+- [ ] 加入 eslint
+- [ ] 加入 .env 文件
