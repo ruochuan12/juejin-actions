@@ -1,8 +1,9 @@
-import { checkIn, getStatus, getCounts, getCurPoint } from './services/index.js';
+import { checkIn, getStatus, getCounts, getCurPoint, freeDraw } from './services/index.js';
 
 async function getInfo() {
     const [err1, res1] = await getCurPoint();
     const [err2, res2] = await getCounts();
+    const [err3, res3] = await freeDraw();
     const message = [];
     if (!err1) {
         message.push(`当前矿石数: ${res1.data}`);
@@ -11,6 +12,10 @@ async function getInfo() {
         message.push(`连续签到天数: ${res2.data.cont_count}`);
         message.push(`累计签到天数: ${res2.data.sum_count}\n`);
     }
+    if (!err3) {
+        message.push(`免费抽奖完成，恭喜获得: ${res3.data.lottery_name}`);
+    }
+
     return message;
 }
 

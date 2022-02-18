@@ -18,7 +18,7 @@ export const draw = async function(){
  * @date 2022-01-09
  */
 export const getStatus = async function(){
-    return await request({ 
+    return await request({
         url: `${prefix}get_today_status`,
     });
 }
@@ -29,7 +29,7 @@ export const getStatus = async function(){
  * @date 2022-01-09
  */
 export const checkIn = async function(){
-    return await request({ 
+    return await request({
         url: `${prefix}check_in`,
         method: 'post',
     });
@@ -41,7 +41,7 @@ export const checkIn = async function(){
  * @date 2022-01-09
  */
 export const getCounts = async function(){
-    return await request({ 
+    return await request({
         url: `${prefix}get_counts`,
     });
 }
@@ -54,5 +54,17 @@ export const getCounts = async function(){
 export const getCurPoint = async function(){
     return await request({
         url: `${prefix}get_cur_point`,
+    });
+}
+
+/**
+ * 获取当前积分
+ * @author StevenLee
+ * @date 2022-02-18
+ */
+export const freeDraw = async function(){
+    return await request({
+        url: `${prefix}lottery/draw`,
+        method: 'post'
     });
 }
