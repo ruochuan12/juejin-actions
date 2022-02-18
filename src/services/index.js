@@ -58,7 +58,7 @@ export const getCurPoint = async function(){
 }
 
 /**
- * 获取当前积分
+ * 抽奖~不是第一次会花200矿石
  * @author StevenLee
  * @date 2022-02-18
  */
