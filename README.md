@@ -1,5 +1,7 @@
 # juejin-actions
 
+>2月18日，由于掘金政策不允许，[梅楼封发布的警告封号处理消息](https://juejin.cn/pin/7065954293509160997)，可能被封号，**所以我禁用了，无法正常签到了**。大家可以学习本仓库。另外欢迎添加我的微信 `ruochuan12`，参加近3000人报名的 [源码共读活动](https://www.yuque.com/ruochuan12/topics/1)，学会看源码相当于打开了新的世界，成长会比较快。
+
 > 每天掘金自动签到 时间自定义，默认8:00
 
 你好，我是[**若川**](https://lxchuan12.gitee.io)。目前持续组织了5个月[每周一起学200行左右源码共读活动](https://www.yuque.com/ruochuan12/topics/1)，每周一期，已进行到20期，感兴趣的可以加我微信 [ruochuan12](https://mp.weixin.qq.com/s?__biz=MzA5MjQwMzQyNw==&mid=2650756550&idx=1&sn=9acc5e30325963e455f53ec2f64c1fdd&chksm=8866564abf11df5c41307dba3eb84e8e14de900e1b3500aaebe802aff05b0ba2c24e4690516b&token=917686367&lang=zh_CN#rd) 加群参与，长期交流学习。
@@ -59,8 +61,8 @@
 on:
   push:
   schedule:
-    # 定时任务 每天 11:00 自动签到，按照计划任务队列，可能延迟 3 + 8 = 北京时间 11
-    - cron: '00 3 * * *'
+    # 定时任务 每天 8:00 自动签到，按照计划任务队列，可能延迟 0 + 8 = 北京时间 8
+    - cron: '00 0 * * *'
 
 jobs:
   juejin:
