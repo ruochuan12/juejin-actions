@@ -21,6 +21,7 @@ jobs:
           MAIL_HOST_SENDER: ${{secrets.MAIL_HOST_SENDER}}
           MAIL_PORT_SENDER: ${{secrets.MAIL_PORT_SENDER}}
           MAIL_RECIPIENT: ${{secrets.MAIL_RECIPIENT}}
+          NODE_ENV: ${{secrets.NODE_ENV}}
         with:
           who-to-greet: '若川'
       # Use the output from the `hello` step

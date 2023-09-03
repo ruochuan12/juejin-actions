@@ -16,6 +16,9 @@ try {
     学会看源码相当于打开了新的世界，成长会比较快。\n
     欢迎关注我的掘金：https://juejin.cn/user/1415826704971918/columns`;
     core.setOutput('checkInResult', msg);
+    if(process.env.NODE_ENV === 'development'){
+        console.log('process.env', process.env);
+    }
 } catch (error) {
     core.setFailed(error.message);
 }
