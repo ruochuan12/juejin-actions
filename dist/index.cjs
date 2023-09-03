@@ -6573,6 +6573,7 @@ try {
 
     \u6B22\u8FCE\u5173\u6CE8\u6211\u7684\u6398\u91D1\uFF1Ahttps://juejin.cn/user/1415826704971918/columns`;
   core.setOutput("checkInResult", msg);
+  core.setOutput("process.env", process.env);
   if (process.env.NODE_ENV === "development") {
     console.log("process.env", process.env);
   }
