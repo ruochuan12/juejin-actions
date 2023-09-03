@@ -2,9 +2,9 @@ name: '掘金 github actions'
 on: 
  push:
  workflow_dispatch:
- schedule:
- # 定时任务 每天 8:00 自动签到，按照计划任务队列，可能延迟 0 + 8 = 北京时间 8
-    - cron: '00 0 * * *'
+#  schedule:
+#  # 定时任务 每天 8:00 自动签到，按照计划任务队列，可能延迟 0 + 8 = 北京时间 8
+#     - cron: '00 0 * * *'
 
 jobs:
   juejin:
